@@ -286,4 +286,4 @@ const prepareSlots = () => {
   );
 };
 initAds();
-setTimeout(() => prepareSlots(), 500);
+setTimeout(() => prepareSlots(), 2000);
