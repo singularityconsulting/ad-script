@@ -1,3 +1,12 @@
+!function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function()
+{q("f",arguments)},setDisplayBids:function(){},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(A,g)}("apstag",window,document,"script","//c.amazon-adsystem.com/aax2/apstag.js");
+// initialize apstag and have apstag set bids on the googletag slots when they are returned to the page
+apstag.init({ 
+  pubID: '3b1c3bb9-0a92-42c7-89f2-ab90b652b552', // **b552 pubID is for CookingProfessionally, please replace with new ID for funnyEditor before release
+  adServer: 'googletag',
+  bidTimeout: 500
+});
+
 let preppedAdSlots = [];
 const slotsMap = [
   {
