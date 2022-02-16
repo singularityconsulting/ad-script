@@ -1,4 +1,4 @@
-var ADLIBRARY =
+let ADLIBRARY =
   ADLIBRARY ||
   (function () {
     let slotsMap = []
