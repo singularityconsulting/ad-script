@@ -322,5 +322,4 @@ const prepareSlots = () => {
   })
 }
 initAds()
-// prepareSlots();
-setTimeout(() => prepareSlots(), 1)
+prepareSlots();
