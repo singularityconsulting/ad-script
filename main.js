@@ -1,5 +1,5 @@
-var ADLIBRARY =
-  ADLIBRARY ||
+window.ADLIBRARY =
+window.ADLIBRARY ||
   (function () {
     let slotsMap = []
 
