@@ -70,6 +70,26 @@ window.ADLIBRARY =
         [120, 600],
       ]
 
+      const bottomStickyDesktopSizes = [
+        [970, 250],
+        [970, 90],
+        [970, 66],
+        [728, 90],
+        [468, 60],
+      ]
+      const bottomStickyTabletSizes = [
+        [970, 90],
+        [970, 66],
+        [728, 90],
+        [320, 50],
+        [300, 50],
+      ]
+      const bottomStickyMobileSizes = [
+        [320, 50],
+        [300, 50],
+      ]
+
+
       const isMobile = () => {
         const UA = navigator.userAgent || navigator.vendor || window.opera
         return (
@@ -172,6 +192,14 @@ window.ADLIBRARY =
                       .addSize([0, 0], [])
                       .build()
                 }
+              } else if (slot.type && slot.type == 'bottomsticky') {
+                  sizes = stickySizes
+                  sizeMap = googletag
+                      .sizeMapping()
+                      .addSize([970, 0], bottomStickyDesktopSizes)
+                      .addSize([768, 0], bottomStickyTabletSizes)
+                      .addSize([0, 0], bottomStickyMobileSizes)
+                      .build()
               } else {
                 if (innerWidth >= 970) {
                   sizes = desktopSizes
