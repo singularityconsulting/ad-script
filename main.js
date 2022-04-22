@@ -71,7 +71,6 @@ window.ADLIBRARY =
       ]
 
       const bottomStickyDesktopSizes = [
-        [970, 250],
         [970, 90],
         [970, 66],
         [728, 90],
