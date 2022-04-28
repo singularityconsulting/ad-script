@@ -90,6 +90,11 @@ window.ADLIBRARY =
         [300, 50],
       ]
 
+      const topBannerMobileSizes = [
+        [320, 50],
+        [300, 50],
+      ]
+
 
       const isMobile = () => {
         const UA = navigator.userAgent || navigator.vendor || window.opera
@@ -184,6 +189,20 @@ window.ADLIBRARY =
                     .addSize([768, 0], tabletSizes)
                     .addSize([0, 0], mobileSizes)
                     .build()
+              } else if (slot.type && slot.type == 'header_banner') {
+                if (innerWidth >= 970) {
+                  sizes = largeBannerSizes
+                } else if (innerWidth >= 768 && innerWidth < 970) {
+                  sizes = tabletSizes
+                } else {
+                  sizes = topBannerMobileSizes
+                }
+                sizeMap = googletag
+                    .sizeMapping()
+                    .addSize([970, 0], largeBannerSizes)
+                    .addSize([768, 0], tabletSizes)
+                    .addSize([0, 0], topBannerMobileSizes)
+                    .build()
               } else if (slot.type && slot.type == 'sidebar') {
                 if (innerWidth >= 1280) {
                   sizes = stickySizes
@@ -218,11 +237,19 @@ window.ADLIBRARY =
               }
 
               if (sizeMap) {
-                const adSlot = googletag
-                    .defineSlot(slot.slotName, sizes, slot.slotId)
-                    .addService(googletag.pubads())
-                adSlot.defineSizeMapping(sizeMap)
-                displayAd(slot)
+                  if (slot.type !== 'feed_even') {
+                      const adSlot = googletag
+                          .defineSlot(slot.slotName, sizes, slot.slotId)
+                          .addService(googletag.pubads())
+                      adSlot.defineSizeMapping(sizeMap)
+                      displayAd(slot)
+                  } else if (innerWidth >= 768 && slot.type === 'feed_even') {
+                      const adSlot = googletag
+                          .defineSlot(slot.slotName, sizes, slot.slotId)
+                          .addService(googletag.pubads())
+                      adSlot.defineSizeMapping(sizeMap)
+                      displayAd(slot)
+                  }
               }
             }
           })
