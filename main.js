@@ -175,6 +175,20 @@ window.ADLIBRARY =
                     .addSize([768, 0], tabletFeedSizes)
                     .addSize([0, 0], mobileFeedSizes)
                     .build()
+              } else if (slot.type && slot.type == 'feed_even') {
+                  if (innerWidth >= 970) {
+                      sizes = feedSizes
+                  } else if (innerWidth >= 768 && innerWidth < 970) {
+                      sizes = tabletFeedSizes
+                  } else {
+                      sizes = mobileFeedSizes
+                  }
+                  sizeMap = googletag
+                      .sizeMapping()
+                      .addSize([970, 0], feedSizes)
+                      .addSize([768, 0], tabletFeedSizes)
+                      .addSize([0, 0], mobileFeedSizes)
+                      .build()
               } else if (slot.type && slot.type == 'header') {
                 if (innerWidth >= 970) {
                   sizes = largeBannerSizes
