@@ -123,23 +123,22 @@ window.ADLIBRARY =
         googletag.cmd.push(() => {
           googletag.display(slot.slotId)
           const slots = googletag.pubads().getSlots()
+            const { innerWidth } = window
           if (Array.isArray(slots)) {
             const slotID = slot.slotId
             const slotName = slot.slotName
 
             const sizes = getAdsSizes(slot)
 
-            /*if (slot?.type === 'sidebar') {
-              sizes = [...stickySizes]
-            } else {
-              sizes = [...mobileSizes, ...tabletSizes, ...desktopSizes]
-            }*/
-
             const amazonSlotObj = { slotID, slotName, sizes }
+
+              // if (innerWidth <= 768 && slot.type === 'feed_even') {
+              //     amazonSlotObj.sizes = [];
+              // }
 
             console.log('amazonSlotObj >>>> ', amazonSlotObj);
 
-            if (amazonSlotObj.sizes.length > 0) {
+            if (amazonSlotObj.sizes && amazonSlotObj.sizes.length > 0) {
               const curSlot = slots.find((s) => s.getSlotElementId() === slotID)
 
               apstag.fetchBids({ slots: [amazonSlotObj] }, function (bids) {
@@ -274,6 +273,7 @@ window.ADLIBRARY =
 
       const getAdsSizes = (slot) => {
           let availableSizes;
+          const { innerWidth } = window
 
           if (slot.type && slot.type == 'feed') {
               if (innerWidth >= 970) {
@@ -312,7 +312,13 @@ window.ADLIBRARY =
                   availableSizes = stickySizes
               }
           } else if (slot.type && slot.type == 'bottomsticky') {
-              availableSizes = stickySizes
+              if (innerWidth >= 970) {
+                  availableSizes = bottomStickyDesktopSizes
+              } else if (innerWidth >= 768 && innerWidth < 970) {
+                  availableSizes = bottomStickyTabletSizes
+              } else {
+                  availableSizes = bottomStickyMobileSizes
+              }
           } else {
               if (innerWidth >= 970) {
                   availableSizes = desktopSizes
@@ -322,22 +328,6 @@ window.ADLIBRARY =
                   availableSizes = mobileSizes
               }
           }
-/*
-          if (sizeMap) {
-              if (slot.type !== 'feed_even') {
-                  const adSlot = googletag
-                      .defineSlot(slot.slotName, sizes, slot.slotId)
-                      .addService(googletag.pubads())
-                  adSlot.defineSizeMapping(sizeMap)
-                  displayAd(slot)
-              } else if (innerWidth >= 768 && slot.type === 'feed_even') {
-                  const adSlot = googletag
-                      .defineSlot(slot.slotName, sizes, slot.slotId)
-                      .addService(googletag.pubads())
-                  adSlot.defineSizeMapping(sizeMap)
-                  displayAd(slot)
-              }
-          }*/
 
           return availableSizes
       }
