@@ -127,15 +127,17 @@ window.ADLIBRARY =
             const slotID = slot.slotId
             const slotName = slot.slotName
 
-            let sizes
+            const sizes = getAdsSizes(slot)
 
-            if (slot?.type === 'sidebar') {
+            /*if (slot?.type === 'sidebar') {
               sizes = [...stickySizes]
             } else {
               sizes = [...mobileSizes, ...tabletSizes, ...desktopSizes]
-            }
+            }*/
 
             const amazonSlotObj = { slotID, slotName, sizes }
+
+            console.log('amazonSlotObj >>>> ', amazonSlotObj);
 
             if (amazonSlotObj.sizes.length > 0) {
               const curSlot = slots.find((s) => s.getSlotElementId() === slotID)
@@ -268,6 +270,76 @@ window.ADLIBRARY =
             }
           })
         })
+      }
+
+      const getAdsSizes = (slot) => {
+          let availableSizes;
+
+          if (slot.type && slot.type == 'feed') {
+              if (innerWidth >= 970) {
+                  availableSizes = feedSizes
+              } else if (innerWidth >= 768 && innerWidth < 970) {
+                  availableSizes = tabletFeedSizes
+              } else {
+                  availableSizes = mobileFeedSizes
+              }
+          } else if (slot.type && slot.type == 'feed_even') {
+              if (innerWidth >= 970) {
+                  availableSizes = feedSizes
+              } else if (innerWidth >= 768 && innerWidth < 970) {
+                  availableSizes = tabletFeedSizes
+              } else {
+                  availableSizes = mobileFeedSizes
+              }
+          } else if (slot.type && slot.type == 'header') {
+              if (innerWidth >= 970) {
+                  availableSizes = largeBannerSizes
+              } else if (innerWidth >= 768 && innerWidth < 970) {
+                  availableSizes = tabletSizes
+              } else {
+                  availableSizes = mobileSizes
+              }
+          } else if (slot.type && slot.type == 'header_banner') {
+              if (innerWidth >= 970) {
+                  availableSizes = largeBannerSizes
+              } else if (innerWidth >= 768 && innerWidth < 970) {
+                  availableSizes = tabletSizes
+              } else {
+                  availableSizes = topBannerMobileSizes
+              }
+          } else if (slot.type && slot.type == 'sidebar') {
+              if (innerWidth >= 1280) {
+                  availableSizes = stickySizes
+              }
+          } else if (slot.type && slot.type == 'bottomsticky') {
+              availableSizes = stickySizes
+          } else {
+              if (innerWidth >= 970) {
+                  availableSizes = desktopSizes
+              } else if (innerWidth >= 768 && innerWidth < 970) {
+                  availableSizes = tabletSizes
+              } else {
+                  availableSizes = mobileSizes
+              }
+          }
+/*
+          if (sizeMap) {
+              if (slot.type !== 'feed_even') {
+                  const adSlot = googletag
+                      .defineSlot(slot.slotName, sizes, slot.slotId)
+                      .addService(googletag.pubads())
+                  adSlot.defineSizeMapping(sizeMap)
+                  displayAd(slot)
+              } else if (innerWidth >= 768 && slot.type === 'feed_even') {
+                  const adSlot = googletag
+                      .defineSlot(slot.slotName, sizes, slot.slotId)
+                      .addService(googletag.pubads())
+                  adSlot.defineSizeMapping(sizeMap)
+                  displayAd(slot)
+              }
+          }*/
+
+          return availableSizes
       }
 
       return {
