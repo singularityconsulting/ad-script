@@ -132,11 +132,9 @@ window.ADLIBRARY =
 
             const amazonSlotObj = { slotID, slotName, sizes }
 
-              // if (innerWidth <= 768 && slot.type === 'feed_even') {
-              //     amazonSlotObj.sizes = [];
-              // }
-
-            console.log('amazonSlotObj >>>> ', amazonSlotObj);
+            if (innerWidth <= 768 && slot.type === 'feed_even') {
+                amazonSlotObj.sizes = [];
+            }
 
             if (amazonSlotObj.sizes && amazonSlotObj.sizes.length > 0) {
               const curSlot = slots.find((s) => s.getSlotElementId() === slotID)
